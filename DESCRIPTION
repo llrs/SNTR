@@ -1,10 +1,10 @@
-Package: papr
-Title: Retrieve grants from the goverment.
+Package: SNTR
+Title: Spanish National Transparency Register
 Version: 0.0.0.9000
 Authors@R: 
     person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9747-2570"))
-Description: Acces the goverment for some data
+Description: Retrieve data from the Goverment Spanish National Transparency Register for Public Grants and Aids.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

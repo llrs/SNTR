@@ -2,7 +2,7 @@ prepare_api <- function() {
   request("https://www.pap.hacienda.gob.es") |>
     req_url_path_append("bdnstrans/api") |>
     req_throttle(rate = 15 / 60) |> # No hard limit, just to be polite
-    req_user_agent("papr (https://github.com/llrs/papr)") |>
+    req_user_agent("SNTR (https://github.com/llrs/SNTR)") |>
     req_url_query(vpd = "GE")
 }
 
