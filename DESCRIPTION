@@ -13,3 +13,5 @@ Imports:
     httr2 (>= 1.0.0)
 Depends: 
     R (>= 4.1)
+URL: https://github.com/llrs/SNTR
+BugReports: https://github.com/llrs/SNTR/issues
