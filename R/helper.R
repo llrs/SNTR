@@ -1,9 +1,9 @@
 prepare_api <- function() {
   request("https://www.pap.hacienda.gob.es") |>
     req_url_path_append("bdnstrans/api") |>
+    req_throttle(rate = 15 / 60) |> # No hard limit, just to be polite
     req_user_agent("papr (https://github.com/llrs/papr)") |>
-    req_url_query(vpd = "GE") |>
-    req_throttle(rate = 15 / 60)
+    req_url_query(vpd = "GE")
 }
 
 #' Site configuration
@@ -63,4 +63,15 @@ find_region_level <- function(levels, regions) {
   # TODO: find all the parents of that level
   # Note that the same id might be in different regions so prune again those
   # that do not belong
+}
+
+
+check_interval <- function(value, min, max) {
+  if (value < min) {
+    return(min)
+  }
+  if (value > max) {
+    return(max)
+  }
+  value
 }

@@ -1,11 +1,10 @@
-page_size <- c(100, 1000, 1000)
-search_convocatorias <- function(n = 20, ...) {
+search_convocatorias <- function(n = 100, ...) {
 
-  min()
+  n_pages <- ceiling(n / check_interval(n, 10, formals()$n))
   # https://www.pap.hacienda.gob.es/bdnstrans/api/convocatorias/busqueda?vpd=GE&page=0&pageSize=100&order=fechaRecepcion&direccion=desc
   req <- prepare_api() |>
     req_url_path_append("convocatorias/busqueda") |>
-    req_url_query(page = "0", pageSize = "10000",
+    req_url_query(page = "0", pageSize = "1000",
                   order = "fechaRecepcion", direccion = "desc")
 
   resps <- req_perform_iterative(
@@ -15,7 +14,7 @@ search_convocatorias <- function(n = 20, ...) {
                                      resp_body_json(resp)$totalPages
                                    },
     ),
-    max_reqs = 20
+    max_reqs = n_pages
   )
 
   l2 <- lapply(resps, function(x){
@@ -29,6 +28,7 @@ search_convocatorias <- function(n = 20, ...) {
   })
   out <- do.call(rbind, l2)
 }
+
 # p <- jsonlite::read_json("https://www.pap.hacienda.gob.es/bdnstrans/api/concesiones/busqueda?vpd=GE&page=0&pageSize=100&order=fechaConcesion&direccion=desc")
 # https://www.pap.hacienda.gob.es/bdnstrans/api/convocatorias?numConv=737599&vpd=GE
 #' @examples

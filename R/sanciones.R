@@ -1,7 +1,33 @@
-sanciones <- function(...) {
+# order = nivel{1,2,3}
+# tipoAdministracion=O,A,C,L
+# organos=4622
+# actividad=344,363
+# regiones=107
+# instrumentos=2
+search_sanciones <- function(n = 100, ...) {
+  n_pages <- ceiling(n / check_interval(n, 100, formals()$n))
   req <- prepare_api() |>
     req_url_path_append("sanciones/busqueda") |>
-    req_url_query(vpd = "GE", page = 100, pageSize = 100, order="fechaConcesion", direccion = "desc")
+    req_url_query(vpd = "GE", page = 0, pageSize = 100,
+                  order = "fechaConcesion", direccion = "desc")
+  page=0&pageSize=100&order=nivel1&direccion=desc
+  vpd=GE
+  tipoAdministracion=O
+  organos=4622
+  page=0
+  pageSize=100
+  order=nivel1
+  direccion=desc
+
+  resps <- req_perform_iterative(
+    req,
+    next_req = iterate_with_offset("page",
+                                   resp_pages = function(resp) {
+                                     resp_body_json(resp)$totalPages
+                                   },
+    ),
+    max_reqs = n_pages
+  )
 }
 
 #' Beneficiaries
