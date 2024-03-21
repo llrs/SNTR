@@ -5,6 +5,7 @@
 #'
 #' @return The path of the file if it has been successfully saved.
 #' @export
+#' @importFrom utils download.file
 #' @examples
 #' documento(963765, "~/Downloads/document_963765.pdf")
 documento <- function(document, name ) {

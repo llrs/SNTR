@@ -4,6 +4,7 @@
 # actividad=344,363
 # regiones=107
 # instrumentos=2
+
 search_sanciones <- function(n = 100, ...) {
   n_pages <- ceiling(n / check_interval(n, 100, formals()$n))
   req <- prepare_api() |>
@@ -38,6 +39,7 @@ search_sanciones <- function(n = 100, ...) {
 #' @param ... Other queries.
 #' @return A data.frame with the id, description, NIF and name of the entity.
 #' @export
+#' @import httr2
 #' @examples
 #' out <- beneficiarios("123")
 beneficiarios <- function(busqueda, ambitos = "G", ...) {
