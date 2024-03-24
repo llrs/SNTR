@@ -5,20 +5,31 @@
 # regiones=107
 # instrumentos=2
 
-search_sanciones <- function(n = 100, ...) {
+#' Search sanctions
+#'
+#' Search organism that were sanctioned.
+#' @param n
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+search_sanctions <- function(n = 100, ...) {
+
   n_pages <- ceiling(n / check_interval(n, 100, formals()$n))
   req <- prepare_api() |>
     req_url_path_append("sanciones/busqueda") |>
     req_url_query(vpd = "GE", page = 0, pageSize = 100,
                   order = "fechaConcesion", direccion = "desc")
-  page=0&pageSize=100&order=nivel1&direccion=desc
-  vpd=GE
-  tipoAdministracion=O
-  organos=4622
-  page=0
-  pageSize=100
-  order=nivel1
-  direccion=desc
+  # page=0&pageSize=100&order=nivel1&direccion=desc
+  # vpd=GE
+  # tipoAdministracion=O
+  # organos=4622
+  # page=0
+  # pageSize=100
+  # order=nivel1
+  # direccion=desc
 
   resps <- req_perform_iterative(
     req,

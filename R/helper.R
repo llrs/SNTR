@@ -1,7 +1,7 @@
 prepare_api <- function() {
   request("https://www.pap.hacienda.gob.es") |>
     req_url_path_append("bdnstrans/api") |>
-    req_throttle(rate = 15 / 60) |> # No hard limit, just to be polite
+    req_throttle(rate = 60 / 60) |> # No hard limit, just to be polite
     req_user_agent("SNTR (https://github.com/llrs/SNTR)") |>
     req_url_query(vpd = "GE")
 }
@@ -20,7 +20,6 @@ configuration <- function() {
     req_perform() |>
     resp_body_json()
   out$rutasPermitidas <- unlist(out$rutasPermitidas, FALSE, FALSE)
-  out$
   out
 }
 # https://www.pap.hacienda.gob.es/bdnstrans/api/vpd/GE/configuracion
@@ -30,7 +29,10 @@ configuration <- function() {
 
 
 list2DF2 <- function(x) {
-  o <- do.call(rbind, lapply(x, list2DF))
+  o <- do.call(rbind, lapply(x, function(x){
+    x[lengths(x) == 0] <- NA
+    list2DF(x)
+  }))
   rownames(o) <- NULL
   o
 }
@@ -74,4 +76,19 @@ check_interval <- function(value, min, max) {
     return(max)
   }
   value
+}
+
+
+ordering <- function(x) {
+  y <- switch(x,
+              grantor = "nivel3",
+              departamento = "nivel2",
+              gobierno = "nivel1")
+
+  if (is.null(y))  {
+    y <- x
+  }
+
+  match.arg(y, c("fechaConcesion", "fechaRecepcion", "nivel1", "nivel2", "nivel3",
+                              "numeroConvocatoria", "description", "descripcionLeng"))
 }

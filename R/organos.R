@@ -57,7 +57,15 @@ actividades <- function() {
 
 }
 
+#' Title
+#'
+#' @return
+#' @export
+#' @references <https://www.pap.hacienda.gob.es/bdnstrans/GE/es/concesiones/consulta>
+#' @seealso [de_minimis()], [grandes_beneficiados()], [political_parties()], [ayudas_estado()]
+#' @examples
 concesiones <- function() {
+
   req <- prepare_api() |>
     req_url_path_append("concesiones")
   # https://www.pap.hacienda.gob.es/bdnstrans/api/concesiones/busqueda?vpd=GE&codConcesion=asfd%20aafd&fechaDesde=1/10/2024&fechaHasta=1/19/2024&descripcionTipoBusqueda=0&descripcion=adf%20adf%20&instrumentos=2&page=0&pageSize=100&order=fechaConcesion&direccion=desc
@@ -70,3 +78,15 @@ anios <- function() {
 }
 
 # Order: ejercicio, fechaConcesion
+#
+
+#' Ayudas estado
+#'
+#' @return
+#' @export
+#' @references <https://www.pap.hacienda.gob.es/bdnstrans/GE/es/concesiones/ayudas>
+#' @examples
+ayudas_estado <- function() {
+  req <- prepare_api() |>
+    req_url_path_append("ayudasestado/busqueda")
+}
